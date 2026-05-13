@@ -42,8 +42,7 @@ class ApiService {
     // Force HTTP/1.1 to avoid common HTTP/2 framing issues on mobile-to-cloud regional routes
     if (!kIsWeb) {
       (_dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (client) {
-        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-        // Some systems might need explicit HTTP/1.1 enforcement
+        // SSL certificate validation is enabled (Cloud Run uses valid TLS certs)
         return client;
       };
     }
