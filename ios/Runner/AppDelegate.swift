@@ -8,6 +8,7 @@ import UIKit
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
+    let result = super.application(application, didFinishLaunchingWithOptions: launchOptions)
 
     if let controller = window?.rootViewController as? FlutterViewController {
       let shareChannel = FlutterMethodChannel(
@@ -26,6 +27,6 @@ import UIKit
       }
     }
 
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    return result
   }
 }
