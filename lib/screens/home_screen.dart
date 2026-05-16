@@ -272,208 +272,211 @@ class _HomeScreenState extends State<HomeScreen>
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 40),
-                  Container(
-                    padding: const EdgeInsets.all(32),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.5),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.baseBlue.withOpacity(0.05),
-                          blurRadius: 40,
-                          spreadRadius: 10,
-                        )
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.fingerprint_rounded,
-                      size: 100,
-                      color: AppTheme.baseBlue,
-                    ),
-                  ),
-                  const SizedBox(height: 48),
-                  Text(
-                    'Verify Digital\nAuthenticity',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      height: 1.1,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Upload media to detect AI generation, deepfakes, and alterations using our Penta-Layer Forensic Defense Architecture.',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppTheme.textLight,
-                      height: 1.6,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  // URL Input Bar
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.baseBlue.withOpacity(0.08),
-                          blurRadius: 15,
-                          offset: const Offset(0, 5),
-                        )
-                      ],
-                    ),
-                    child: Row(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Icon(Icons.link_rounded, color: AppTheme.baseBlue),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: TextField(
-                            controller: _urlController,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Paste YouTube or Instagram link...',
-                              hintStyle: TextStyle(color: Colors.black38),
+                        const SizedBox(height: 40),
+                        Container(
+                          padding: const EdgeInsets.all(32),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.5),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppTheme.baseBlue.withOpacity(0.05),
+                                blurRadius: 40,
+                                spreadRadius: 10,
+                              )
+                            ],
+                          ),
+                          child: const Icon(
+                            Icons.fingerprint_rounded,
+                            size: 100,
+                            color: AppTheme.baseBlue,
+                          ),
+                        ),
+                        const SizedBox(height: 48),
+                        Text(
+                          'Verify Digital\nAuthenticity',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                            height: 1.1,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          'Upload media to detect AI generation, deepfakes, and alterations using our Penta-Layer Forensic Defense Architecture.',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: AppTheme.textLight,
+                            height: 1.6,
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        // URL Input Bar
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppTheme.baseBlue.withOpacity(0.08),
+                                blurRadius: 15,
+                                offset: const Offset(0, 5),
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.link_rounded, color: AppTheme.baseBlue),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: TextField(
+                                  controller: _urlController,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Paste YouTube or Instagram link...',
+                                    hintStyle: TextStyle(color: Colors.black38),
+                                  ),
+                                  onSubmitted: (value) {
+                                    if (value.isNotEmpty && value.startsWith('http')) {
+                                      _navigateToAnalysisUrl(value);
+                                      _urlController.clear();
+                                    }
+                                  },
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  if (_urlController.text.isNotEmpty && _urlController.text.startsWith('http')) {
+                                    _navigateToAnalysisUrl(_urlController.text);
+                                    _urlController.clear();
+                                  }
+                                },
+                                icon: const Icon(Icons.arrow_forward_rounded, color: AppTheme.baseBlue),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: const [
+                            SizedBox(width: 4),
+                            Icon(Icons.info_outline_rounded, size: 13, color: Colors.black38),
+                            SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                'For Instagram Reels, saving to your gallery first gives the most accurate results.',
+                                style: TextStyle(fontSize: 12, color: Colors.black38, height: 1.4),
+                              ),
                             ),
-                            onSubmitted: (value) {
-                              if (value.isNotEmpty && value.startsWith('http')) {
-                                _navigateToAnalysisUrl(value);
-                                _urlController.clear();
-                              }
-                            },
-                          ),
+                          ],
                         ),
-                        IconButton(
-                          onPressed: () {
-                            if (_urlController.text.isNotEmpty && _urlController.text.startsWith('http')) {
-                              _navigateToAnalysisUrl(_urlController.text);
-                              _urlController.clear();
-                            }
-                          },
-                          icon: const Icon(Icons.arrow_forward_rounded, color: AppTheme.baseBlue),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 10),
-                  Row(
-                    children: const [
-                      SizedBox(width: 4),
-                      Icon(Icons.info_outline_rounded, size: 13, color: Colors.black38),
-                      SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          'For Instagram Reels, saving to your gallery first gives the most accurate results.',
-                          style: TextStyle(fontSize: 12, color: Colors.black38, height: 1.4),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 48),
-                  Center(
-                    child: SizedBox(
-                      width: 220,
-                      height: 220,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                        // Ripple ring 1
-                        AnimatedBuilder(
-                          animation: _rippleController,
-                          builder: (context, child) {
-                            final v = _rippleController.value;
-                            return Container(
-                              width:  88 + 90 * v,
-                              height: 88 + 90 * v,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppTheme.baseBlue.withOpacity((1 - v) * 0.35),
-                                  width: 2,
+                        const SizedBox(height: 48),
+                        Center(
+                          child: SizedBox(
+                            width: 220,
+                            height: 220,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                // Ripple ring 1
+                                AnimatedBuilder(
+                                  animation: _rippleController,
+                                  builder: (context, child) {
+                                    final v = _rippleController.value;
+                                    return Container(
+                                      width: 88 + 90 * v,
+                                      height: 88 + 90 * v,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: AppTheme.baseBlue.withOpacity((1 - v) * 0.35),
+                                          width: 2,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                        // Ripple ring 2 — half a cycle behind ring 1
-                        AnimatedBuilder(
-                          animation: _rippleController,
-                          builder: (context, child) {
-                            final v = (_rippleController.value + 0.5) % 1.0;
-                            return Container(
-                              width:  88 + 90 * v,
-                              height: 88 + 90 * v,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppTheme.baseBlue.withOpacity((1 - v) * 0.35),
-                                  width: 2,
+                                // Ripple ring 2 — half a cycle behind ring 1
+                                AnimatedBuilder(
+                                  animation: _rippleController,
+                                  builder: (context, child) {
+                                    final v = (_rippleController.value + 0.5) % 1.0;
+                                    return Container(
+                                      width: 88 + 90 * v,
+                                      height: 88 + 90 * v,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: AppTheme.baseBlue.withOpacity((1 - v) * 0.35),
+                                          width: 2,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                        // The + button with pulse scale
-                        AnimatedBuilder(
-                          animation: _pulseAnimation,
-                          builder: (context, child) => Transform.scale(
-                            scale: _pulseAnimation.value,
-                            child: child,
-                          ),
-                          child: Hero(
-                            tag: 'upload_button',
-                            child: Container(
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppTheme.baseBlue.withOpacity(0.3),
-                                    blurRadius: 30,
-                                    offset: const Offset(0, 15),
-                                  )
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: BackdropFilter(
-                                  filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                                  child: Material(
-                                    color: AppTheme.baseBlue,
-                                    child: InkWell(
-                                      onTap: () => _showPickerOptions(context),
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(24),
-                                        child: Icon(
-                                          Icons.add_rounded,
-                                          size: 40,
-                                          color: Colors.white,
+                                // The + button with pulse scale
+                                AnimatedBuilder(
+                                  animation: _pulseAnimation,
+                                  builder: (context, child) => Transform.scale(
+                                    scale: _pulseAnimation.value,
+                                    child: child,
+                                  ),
+                                  child: Hero(
+                                    tag: 'upload_button',
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: AppTheme.baseBlue.withOpacity(0.3),
+                                            blurRadius: 30,
+                                            offset: const Offset(0, 15),
+                                          )
+                                        ],
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(100),
+                                        child: BackdropFilter(
+                                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                                          child: Material(
+                                            color: AppTheme.baseBlue,
+                                            child: InkWell(
+                                              onTap: () => _showPickerOptions(context),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(24),
+                                                child: Icon(
+                                                  Icons.add_rounded,
+                                                  size: 40,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ),
+                        const SizedBox(height: 48),
                       ],
-                      ),
                     ),
                   ),
-                  const SizedBox(height: 48),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
